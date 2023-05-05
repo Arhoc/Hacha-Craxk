@@ -53,6 +53,14 @@ Los argumentos son los siguientes:
 - --wlist: La lista de palabras a usar para el ataque. Se puede especificar más de una lista separando cada ruta de archivo con un espacio
 - --list: Muestra los hashes compatibles.
 
+### Ejemplos
+```
+./Hacha-Craxk --wlist=wlist.txt,/usr/share/dict/rockyou.txt --hash SHA256 d577adc54e95f42f15de2e7c134669888b7d6fb74df97bd62cb4f5b73c281db4
+``` 
+```
+./Hacha-Craxk --wlist rockyou.txt /abs/path/passwords.txt --hash=RIPEMD160 13bdc6e4f3bccec5c62764a55de6c9748c9f2beb
+``` 
+
 ## Algoritmos de Hash compatibles
 
 Hacha-Craxk admite los siguientes algoritmos de hash:
@@ -72,7 +80,7 @@ El programa depende de la biblioteca OpenSSL, que debe estar instalada en su sis
 
 ##Autor
 
-Este programa fue creado por Arhoc como un proyecto personal. Si tiene alguna pregunta o comentario, no dude en ponerse en contacto conmigo.
+Este programa fue creado por Arhoc como un proyecto personal. Si tiene alguna pregunta o comentario, no dude en ponerse en contacto conmigo, no me hago responsable de cualquier uso no 
 
 ## Important
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
