@@ -1,5 +1,48 @@
 # Hacha-Craxk
-Hacha-Craxk es una herramienta de fuerza bruta de contraseñas escrita en C usando OpenSSL que permite a los usuarios probar todas las combinaciones posibles de contraseñas para un hash determinado.
+Este repositorio contiene un programa de línea de comandos que permite realizar ataques de fuerza bruta para encontrar contraseñas a partir de hashes. El programa utiliza una variedad de algoritmos de hash, como MD5, SHA1 y SHA256, entre otros.
+
+El programa permite especificar el tipo de hash que se está atacando, así como la lista de posibles contraseñas en archivos de texto plano. El programa también cuenta con una opción para listar los tipos de hash compatibles.
+
+Este programa es útil para los investigadores de seguridad y los profesionales de la informática que necesitan encontrar contraseñas perdidas o recuperar claves olvidadas. También puede ser utilizado para fines maliciosos, por lo que se recomienda que sólo se utilice con fines éticos y legales.
+
+## Instrucciones de compilacion
+Este código es una implementación de un programa para realizar ataques de fuerza bruta a hashes de contraseñas. Para compilarlo, es necesario tener el compilador de GCC instalado y los paquetes de desarrollo de OpenSSL. Para compilar, se debe ejecutar el siguiente comando en la terminal:
+```
+gcc -o Hacha-Craxk main.c -lcrypto -lssl -DOPENSSL_API_COMPAT=0x10100000L
+```
+
+Este programa depende de la biblioteca OpenSSL, por lo que debes asegurarte de tenerla instalada en tu sistema antes de compilar y ejecutar el programa. Puedes instalarlo, según tu distribución, de la siguiente manera:
+
+### Ubuntu/Debian
+```
+sudo apt-get update
+sudo apt-get install openssl libssl-dev
+```
+
+### Fedora
+```
+sudo dnf update
+sudo dnf install openssl openssl-devel
+```
+
+### CentOS
+```
+sudo yum update
+sudo yum install openssl openssl-devel
+```
+
+### Archlinnux
+```
+sudo pacman -Syu
+sudo pacman -S openssl
+``` 
+
+### OpenSUSE
+```
+sudo zypper update
+sudo zypper install openssl libopenssl-devel
+```
+
 
 ## Uso
 ```
@@ -22,6 +65,14 @@ Hacha-Craxk admite los siguientes algoritmos de hash:
 - SHA384
 - SHA512
 - RIPEMD160
+
+## Dependencias
+
+El programa depende de la biblioteca OpenSSL, que debe estar instalada en su sistema para que el programa pueda compilar y ejecutarse correctamente. Además, el programa utiliza las bibliotecas estándar de C, como stdio.h y stdlib.h, entre otras.
+
+##Autor
+
+Este programa fue creado por Arhoc como un proyecto personal. Si tiene alguna pregunta o comentario, no dude en ponerse en contacto conmigo.
 
 ## Important
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
