@@ -1,2 +1,1 @@
-# Hacha-Craxk
-Hacha-Craxk es capaz de realizar ataques de fuerza bruta en hashes MD4, MD5, SHA1, SHA224, SHA256, SHA384, SHA512 y RIPEMD160. La herramienta se ha desarrollado en C y utiliza la biblioteca OpenSSL.
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
