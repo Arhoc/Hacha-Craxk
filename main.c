@@ -144,22 +144,49 @@ bool textToHash(char *plaintext, HashAlgorithm algorithm, char **hashValue) {
     return true;
 }
 
+void setArgumentValue(char* arg_name, char* arg_value) {
+    if (strcmp(arg_name, "hash") == 0) {
+        hashType = arg_value;
+    } else if (strcmp(arg_name, "wlist") == 0) {
+        char* token;
+        char* delim = ",";
+        token = strtok(arg_value, delim);
+        while (token != NULL) {
+            num_wordlist_files++;
+            wordlistFiles = (char **)realloc(wordlistFiles, num_wordlist_files * sizeof(char *));
+            wordlistFiles[num_wordlist_files - 1] = token;
+            token = strtok(NULL, delim);
+        }
+    }
+}
+
+
 void parseArgs(int argc, char ** argv) {
     int i;
     for (i = 0; i < argc; i++) {
         if (strcmp(argv[i], "--hash") == 0) {
             hashType = argv[i + 1];
-        } else if (strcmp(argv[i], "--wlist") == 0) {
-            for (int w = i + 1; w < argc; w++) {
-                if (strcmp(argv[w], "--hash") == 0) {
-                    break;
-                }
-                num_wordlist_files++;
-                wordlistFiles = (char ** ) realloc(wordlistFiles, num_wordlist_files * sizeof(char * ));
-                wordlistFiles[num_wordlist_files - 1] = argv[w];
-            }
-            i += num_wordlist_files;
+        } else if (strncmp(argv[i], "--wlist", 7) == 0) {
+            char * arg_value = argv[i] + 7;
+            if (*arg_value == '=')
+                arg_value++;
 
+            while (*arg_value) {
+                char * end = strchr(arg_value, ',');
+                if (end)
+                    *end = '\0';
+                
+                if (*arg_value) {
+                    num_wordlist_files++;
+                    wordlistFiles = (char **)realloc(wordlistFiles, num_wordlist_files * sizeof(char *));
+                    wordlistFiles[num_wordlist_files - 1] = arg_value;
+                }
+
+                if (end)
+                    arg_value = end + 1;
+                else
+                    break;
+            }
         } else if (strcmp(argv[i], "--list") == 0) {
             listHashes = true;
         } else if (strcmp(argv[i], "--help") == 0) {
@@ -172,6 +199,7 @@ void parseArgs(int argc, char ** argv) {
         exit(1);
     }
 }
+
 
 int lineCount(FILE *fp) {
     int count = 0;
@@ -214,9 +242,11 @@ int main(int argc, char ** argv) {
         if (strcmp(hashType, ALGORITHMS[k].name) == 0) {
             FILE * fp;
 
-            printf("[-] Hang on, we're breaking your hash...\n");
+            printf("\033[33m[-]\033[0m Hang on, we're breaking your hash...\n");
 
             for (int i = 0; i < num_wordlist_files; i++) {
+                printf("\033[36m[?]\033[0m Wordlist: %s\n", wordlistFiles[i]);
+
                 fp = fopen(wordlistFiles[i], "r");
                 char buf[MAX_LINE_LENGTH];
 
@@ -225,7 +255,7 @@ int main(int argc, char ** argv) {
                     exit(EXIT_FAILURE);
                 }
 
-                printf("[-] Trying to break %s with %d words...\n", encoded, lineCount(fp));
+                printf("\033[33m[-]\033[0m Trying to break %s with %d words...\n", encoded, lineCount(fp));
                 
                 while (fgets(buf, MAX_LINE_LENGTH, fp) != NULL) {
                     size_t length = strcspn(buf, "\n");
@@ -237,12 +267,12 @@ int main(int argc, char ** argv) {
                     textToHash(line, ALGORITHMS[k], & hashValue);
 
                     if (strcmp(encoded, hashValue) == 0) {
-                        printf("[!] The decoded hash is: %s\n", line);
+                        printf("\033[32m[!]\033[0m The decoded hash is: \033[32m%s\033[0m\n", line);
                         return 0;
                     }
                 }
 
-                printf("[?] Hash not found\n");
+                printf("\033[31m[!]\033[0m Hash not found\n\n");
 
                 fclose(fp);
             }
