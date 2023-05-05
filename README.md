@@ -78,7 +78,7 @@ Hacha-Craxk admite los siguientes algoritmos de hash:
 
 El programa depende de la biblioteca OpenSSL, que debe estar instalada en su sistema para que el programa pueda compilar y ejecutarse correctamente. Además, el programa utiliza las bibliotecas estándar de C, como stdio.h y stdlib.h, entre otras.
 
-##Autor
+## Autor
 
 Este programa fue creado por Arhoc como un proyecto personal. Si tiene alguna pregunta o comentario, no dude en ponerse en contacto conmigo, no me hago responsable de cualquier uso no 
 
