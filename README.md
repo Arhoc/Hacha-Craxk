@@ -8,8 +8,18 @@ Este programa es útil para los investigadores de seguridad y los profesionales 
 ## Instrucciones de compilacion
 Este código es una implementación de un programa para realizar ataques de fuerza bruta a hashes de contraseñas. Para compilarlo, es necesario tener el compilador de GCC instalado y los paquetes de desarrollo de OpenSSL. Para compilar, se debe ejecutar el siguiente comando en la terminal:
 ```
-gcc -o Hacha-Craxk main.c -lcrypto -lssl -DOPENSSL_API_COMPAT=0x10100000L
+gcc -o Hacha-Craxk main.c -lcrypto -lssl -DOPENSSL_API_COMPAT=0x10100000L -O3 -march=native -flto -funroll-all-loops
 ```
+
+- -O2 o -O3: Estas opciones habilitan la optimización del código del programa. -O2 es el nivel de optimización recomendado para la mayoría de los programas, mientras que -O3 puede proporcionar una optimización adicional a cambio de un tiempo de compilación más largo.
+
+- -march=native: Esta opción permite a GCC utilizar optimizaciones específicas de la arquitectura de la máquina en la que se está compilando el programa. Esto puede mejorar significativamente el rendimiento del programa.
+
+- -flto: Esta opción activa la optimización de enlace de tiempo ("Link Time Optimization" en inglés), lo que permite al compilador realizar optimizaciones que involucren múltiples archivos de objeto. Esto puede mejorar aún más la velocidad del ejecutable final.
+
+- -funroll-loops: Esta opción desenrolla los bucles, lo que significa que se eliminan las instrucciones adicionales necesarias para controlar los bucles, lo que puede resultar en un código más rápido.
+
+
 
 Este programa depende de la biblioteca OpenSSL, por lo que debes asegurarte de tenerla instalada en tu sistema antes de compilar y ejecutar el programa. Puedes instalarlo, según tu distribución, de la siguiente manera:
 
