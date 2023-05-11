@@ -19,7 +19,7 @@ gcc -o Hacha-Craxk main.c -lcrypto -lssl -DOPENSSL_API_COMPAT=0x10100000L -O3 -m
 
 - -funroll-loops: Esta opción desenrolla los bucles, lo que significa que se eliminan las instrucciones adicionales necesarias para controlar los bucles, lo que puede resultar en un código más rápido.
 
-
+O simplemente `cd Hacha-Craxk && make`.
 
 Este programa depende de la biblioteca OpenSSL, por lo que debes asegurarte de tenerla instalada en tu sistema antes de compilar y ejecutar el programa. Puedes instalarlo, según tu distribución, de la siguiente manera:
 
