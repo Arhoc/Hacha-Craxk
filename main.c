@@ -49,45 +49,43 @@ bool help = false;
 bool listHashes = false;
 
 void showLogo() {
-    printf(" __ __   ____    __  __ __   ____  \n");
+    printf("\033[1;33m __ __   ____    __  __ __   ____  \n");
     printf("|  |  | /    |  /  ]|  |  | /    | \n");
     printf("|  |  ||  o  | /  / |  |  ||  o  | \n");
     printf("|  _  ||     |/  /  |  _  ||     | \n");
     printf("|  |  ||  _  /   \\_ |  |  ||  _  | \n");
     printf("|  |  ||  |  \\     ||  |  ||  |  | \n");
-    printf("|__|__||__|__|\\____||__|__||__|__| \n");
+    printf("|__|__||__|__|\\____||__|__||__|__| \033[0m\n");
     printf("                                   \n");
-    printf("    __  ____    ____  __ __  __  _ \n");
+    printf("\033[1;31m    __  ____    ____  __ __  __  _ \n");
     printf("   /  ]|    \\  /    ||  |  ||  |/ ]\n");
     printf("  /  / |  D  )|  o  ||  |  ||  ' / \n");
     printf(" /  /  |    / |     ||_   _||    \\ \n");
     printf("/   \\_ |    \\ |  _  ||     ||     \\\n");
     printf("\\     ||  .  \\|  |  ||  |  ||  .  |\n");
-    printf(" \\____||__|\\_||__|__||__|__||__|\\_|\n");
+    printf(" \\____||__|\\_||__|__||__|__||__|\\_|\033[0m\n");
     printf("                                   \n");
-    printf("- Coded with <3 by Arhoc.\n");
+    printf("\033[35m- Coded with <3 by Arhoc.\033[0m\n");
     printf("                                   \n");
-    printf("                                   \n");
-    
-    
+    printf("                                   \n");   
 }
 
 void showHelp(char* pName) {
-    printf("Usage:\n");
-    printf("\t--hash\tThe hash type (MD5, SHA1, etc.)\n");
-    printf("\t--wlist\tThe wordlist(s) to bruteforce\n");
-    printf("\t--list\tList compatible hashes\n");
+    printf("\033[1;33mUsage\033[1;31m:\033[0m\n");
+    printf("\t\033[36m--hash\t\033[1;37mThe hash type (MD5, SHA1, etc.)\033[0m\n");
+    printf("\t\033[36m--wlist\t\033[1;37mThe wordlist(s) to bruteforce\033[0m\n");
+    printf("\t\033[36m--list\t\033[1;37mList compatible hashes\033[0m\n");
 
-    printf("Examples:\n");
-    printf("\t%s --wlist=/usr/share/wordlists/rockyou.txt --hash=sha256 4980b1f29fa32ff18c95d0ed931fd48e1ad43a729251d6eddb3cece705ed4d05\n", pName);
-    printf("\t%s --wlist /usr/share/wordlists/rockyou.txt --hash md5 63e780c3f321d13109c71bf81805476e\n", pName);
-    printf("\t%s --wlist=myWordlist.txt --hash=sha1 myHashFile.txt\n", pName);
+    printf("\033[1;33mExamples\033[1;31m:\033[0m\n");
+    printf("\t\033[32m%s\033[0m \033[36m--wlist=/usr/share/wordlists/rockyou.txt --hash=sha256 4980b1f29fa32ff18c95d0ed931fd48e1ad43a729251d6eddb3cece705ed4d05\033[0m\n", pName);
+    printf("\t\033[32m%s\033[0m \033[36m--wlist /usr/share/wordlists/rockyou.txt --hash md5 63e780c3f321d13109c71bf81805476e\033[0m\n", pName);
+    printf("\t\033[32m%s\033[0m \033[36m--wlist=myWordlist.txt --hash=sha1 myHashFile.txt\033[0m\n", pName);
 }
 
 void showAvailableHashes() {
-    printf("These are the available hashes that I can crack:\n");
+    printf("\033[1;33mThese are the available hashes that I can crack\033[1;31m:\033[0m\n");
     for(int i = 0; i < num_algorithms; i++) {
-        printf("\t- %s\n", ALGORITHMS[i].name);
+        printf("\t\033[1;31m- \033[1;37m%s\033[0m\n", ALGORITHMS[i].name);
     }
 }
 
@@ -144,54 +142,61 @@ bool textToHash(char *plaintext, HashAlgorithm algorithm, char **hashValue) {
     return true;
 }
 
-void setArgumentValue(char* arg_name, char* arg_value) {
-    if (strcmp(arg_name, "hash") == 0) {
-        hashType = arg_value;
-    } else if (strcmp(arg_name, "wlist") == 0) {
-        char* token;
-        char* delim = ",";
-        token = strtok(arg_value, delim);
-        while (token != NULL) {
-            num_wordlist_files++;
-            wordlistFiles = (char **)realloc(wordlistFiles, num_wordlist_files * sizeof(char *));
-            wordlistFiles[num_wordlist_files - 1] = token;
-            token = strtok(NULL, delim);
-        }
-    }
-}
-
 
 void parseArgs(int argc, char ** argv) {
     int i;
     for (i = 0; i < argc; i++) {
         if (strcmp(argv[i], "--hash") == 0) {
-            hashType = argv[i + 1];
+            hashType = argv[++i];
         } else if (strncmp(argv[i], "--wlist", 7) == 0) {
-            char * arg_value = argv[i] + 7;
-            if (*arg_value == '=')
+            char * arg_value = strchr(argv[i], '=');
+            if (arg_value) {
                 arg_value++;
+                while (*arg_value) {
+                    char * end = strchr(arg_value, ',');
+                    if (end)
+                        *end = '\0';
+                    
+                    if (*arg_value) {
+                        num_wordlist_files++;
+                        wordlistFiles = (char **)realloc(wordlistFiles, num_wordlist_files * sizeof(char *));
+                        wordlistFiles[num_wordlist_files - 1] = arg_value;
+                    }
 
-            while (*arg_value) {
-                char * end = strchr(arg_value, ',');
-                if (end)
-                    *end = '\0';
-                
-                if (*arg_value) {
-                    num_wordlist_files++;
-                    wordlistFiles = (char **)realloc(wordlistFiles, num_wordlist_files * sizeof(char *));
-                    wordlistFiles[num_wordlist_files - 1] = arg_value;
+                    if (end)
+                        arg_value = end + 1;
+                    else
+                        break;
                 }
+            } else {
+                arg_value = argv[++i];
 
-                if (end)
-                    arg_value = end + 1;
-                else
-                    break;
+                while (*arg_value) {
+                    char * end = strchr(arg_value, ',');
+                    if (end)
+                        *end = '\0';
+                    
+                    if (*arg_value) {
+                        num_wordlist_files++;
+                        wordlistFiles = (char **)realloc(wordlistFiles, num_wordlist_files * sizeof(char *));
+                        wordlistFiles[num_wordlist_files - 1] = arg_value;
+                    }
+
+                    if (end)
+                        arg_value = end + 1;
+                    else
+                        break;
+                }
             }
         } else if (strcmp(argv[i], "--list") == 0) {
-            listHashes = true;
+            showAvailableHashes();
+            exit(0);
         } else if (strcmp(argv[i], "--help") == 0) {
-            help = true;
-        }
+            showHelp(argv[0]);
+            exit(0);
+        } /*else if (strcmp(argv[i], "-t") == 0 || strcmp(argv[i], "--threads") == 0) {
+            thread_count = atoi(argv[++i]);
+        }*/
     }
 
     if (!hashType || num_wordlist_files == 0) {
