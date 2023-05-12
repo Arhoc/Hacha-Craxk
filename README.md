@@ -91,9 +91,3 @@ El programa depende de la biblioteca OpenSSL, que debe estar instalada en su sis
 ## Autor
 
 Este programa fue creado por Arhoc como un proyecto personal. Si tiene alguna pregunta o comentario, no dude en ponerse en contacto conmigo, no me hago responsable de cualquier uso no ético o ilegal.
-
-## Important
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
-  <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" />
-</a>
-<br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
