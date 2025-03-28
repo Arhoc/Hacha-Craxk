@@ -63,7 +63,7 @@ static void show_help(const char *prog_name) {
     printf("  \033[36m--help\033[0m          Show this help message\n");
     printf("\n\033[1;33mExamples:\033[0m\n");
     printf("  \033[32m%s\033[0m \033[36m--wlist rockyou.txt --hash SHA256 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8\033[0m\n", prog_name);
-    printf("  \033[32m%s\033[0m \033[36m--wlist dict1.txt --wlist dict2.txt --hash MD5 098f6bcd4621d373cade4e832627b4f6\033[0m\n");
+    printf("  \033[32m%s\033[0m \033[36m--wlist dict1.txt --wlist dict2.txt --hash MD5 098f6bcd4621d373cade4e832627b4f6\033[0m\n", prog_name);
 }
 
 static void show_available_hashes(void) {
